@@ -347,10 +347,9 @@ function Boot({ onDone }) {
       <span className="boot-pin tr" />
       <span className="boot-pin bl" />
       <span className="boot-pin br" />
-      <p className="boot-meta mono">SFLM · SOLANA · VIA STONKFUN</p>
       <div className="boot-core">
         <FlameMark className="boot-mark" />
-        <h1 className="boot-word">SFLAME</h1>
+        <h1 className="boot-word">sFlame</h1>
         <div className="boot-progress">
           <div className="boot-bar">
             <span className="boot-fill" ref={fillRef} />

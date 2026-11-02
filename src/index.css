@@ -537,7 +537,7 @@ h5, .h5 { letter-spacing: -0.22px; font-size: 22px; font-weight: 500; line-heigh
 .boot-meta { text-align: center; letter-spacing: 0.28em; opacity: 0.5; animation: boot-in 1.25s 80ms var(--ease) both; position: absolute; top: 36px; left: 0; right: 0; }
 .boot-core { z-index: 1; flex-direction: column; align-items: center; gap: 32px; width: min(86vw, 920px); display: flex; position: relative; }
 .boot-mark { width: 52px; height: 64px; color: var(--brand); transform-origin: 50% 90%; filter: drop-shadow(0 0 18px #69aac188); animation: boot-mark 1.55s var(--ease) both, flame-flicker 2.4s 1.5s ease-in-out infinite; }
-.boot-word { font-family: var(--font); letter-spacing: 0.16em; animation: boot-word 1.55s 60ms var(--ease) both; margin: 0; font-size: clamp(48px, 14vw, 168px); font-weight: 400; line-height: 0.85; }
+.boot-word { font-family: var(--font); letter-spacing: -0.04em; animation: boot-word 1.55s 60ms var(--ease) both; margin: 0; font-size: clamp(48px, 14vw, 168px); font-weight: 400; line-height: 0.85; }
 .boot-progress { width: min(100%, 420px); animation: boot-progress-in 1.2s 0.28s var(--ease) both; grid-template-columns: 1fr auto; align-items: center; gap: 16px; margin-top: 8px; display: grid; }
 .boot-bar { background: #f3f8f81a; height: 2px; position: relative; overflow: visible; }
 .boot-fill { transform-origin: 0; background: var(--brand); width: 100%; display: block; position: absolute; inset: 0; transform: scaleX(0); }
@@ -557,9 +557,9 @@ h5, .h5 { letter-spacing: -0.22px; font-size: 22px; font-weight: 500; line-heigh
   40% { transform: scaleY(1.05) scaleX(0.97) rotate(-1.2deg); }
   72% { transform: scaleY(0.97) scaleX(1.03) rotate(0.9deg); }
 }
-@keyframes boot-word { from { opacity: 0; letter-spacing: 0.38em; transform: translateY(18px); } to { opacity: 1; letter-spacing: 0.16em; transform: none; } }
+@keyframes boot-word { from { opacity: 0; letter-spacing: 0.08em; transform: translateY(18px); } to { opacity: 1; letter-spacing: -0.04em; transform: none; } }
 @keyframes boot-mark-out { to { opacity: 0; transform: scale(0.9); } }
-@keyframes boot-word-out { to { opacity: 0; letter-spacing: 0.26em; transform: translateY(-20px); } }
+@keyframes boot-word-out { to { opacity: 0; letter-spacing: 0.02em; transform: translateY(-20px); } }
 @keyframes boot-leave { to { opacity: 0; visibility: hidden; } }
 @keyframes live-pulse { to { box-shadow: 0 0 0 10px #69aac100; } }
 
