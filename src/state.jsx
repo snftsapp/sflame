@@ -1,7 +1,7 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react"
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react"
 import { useWalletAuth } from "./auth"
-import { verifySflmBurn } from "./burns"
-import { MINT, PRICE_SOL, ROUND_MS, START_POT, START_TARGET, TOKEN_DECIMALS, previewWallet, tokensFor } from "./rules"
+import { readSolBalance, verifySflmBurn } from "./burns"
+import { MINT, POT_WALLET, PRICE_SOL, ROUND_MS, START_TARGET, TOKEN_DECIMALS, canResetClock, tokensFor } from "./rules"
 
 const GameContext = createContext(null)
 
@@ -13,23 +13,44 @@ const seedBurns = [
 export function GameProvider({ children }) {
   const auth = useWalletAuth()
   const [now, setNow] = useState(() => Date.now())
-  const [pot] = useState(START_POT)
+  const [pot, setPot] = useState(null)
   const [targetSol, setTargetSol] = useState(START_TARGET)
   const [deadline, setDeadline] = useState(0)
-  const [lastWallet, setLastWallet] = useState(previewWallet)
+  const [lastWallet, setLastWallet] = useState(null)
+  const [lastBurnAt, setLastBurnAt] = useState(0)
   const [burns, setBurns] = useState(seedBurns)
   const [status, setStatus] = useState("soon")
   const [winner, setWinner] = useState(null)
+  const gate = useRef({ status, deadline, lastBurnAt })
+  gate.current = { status, deadline, lastBurnAt }
 
   useEffect(() => {
     const id = setInterval(() => setNow(Date.now()), 250)
     return () => clearInterval(id)
   }, [])
 
+  useEffect(() => {
+    let stop = false
+    async function pull() {
+      try {
+        const next = await readSolBalance(POT_WALLET)
+        if (!stop && next != null) setPot(next)
+      } catch {
+        // keep the last on-chain read
+      }
+    }
+    pull()
+    const id = setInterval(pull, 15000)
+    return () => {
+      stop = true
+      clearInterval(id)
+    }
+  }, [])
+
   const remaining = status === "live" ? deadline - now : 0
 
   useEffect(() => {
-    if (status === "live" && remaining <= 0) {
+    if (status === "live" && remaining <= 0 && lastWallet) {
       setStatus("claimable")
       setWinner(lastWallet)
     }
@@ -40,25 +61,32 @@ export function GameProvider({ children }) {
 
   const value = useMemo(() => {
     async function burn(signature) {
-      if (status !== "live" || !MINT || !signature) return
+      if (!MINT || !signature) return
       if (burns.some((row) => row.signature === signature)) return
+      const opened = gate.current
+      if (!canResetClock(Date.now(), opened.deadline, opened.status)) return
       let found
       try {
         found = await verifySflmBurn(signature, MINT)
       } catch {
         return
       }
+      const now = Date.now()
+      const current = gate.current
       const need = BigInt(tokensFor(targetSol)) * 10n ** BigInt(TOKEN_DECIMALS)
-      if (!found || found.raw < need) return
+      const burnAt = found ? found.blockTime * 1000 : 0
+      if (!found || found.raw < need || !canResetClock(now, current.deadline, current.status)) return
+      if (current.lastBurnAt && burnAt < current.lastBurnAt) return
       setBurns((list) => [
         { wallet: found.wallet, tokens: found.tokens, sol: targetSol, at: "03:00", signature: found.signature },
         ...list,
       ])
       setLastWallet(found.wallet)
+      setLastBurnAt(burnAt)
       setWinner(null)
       setStatus("live")
-      setTargetSol((current) => current * 1.05)
-      setDeadline(Date.now() + ROUND_MS)
+      setTargetSol((currentTarget) => currentTarget * 1.05)
+      setDeadline(now + ROUND_MS)
     }
 
     return {
@@ -78,7 +106,7 @@ export function GameProvider({ children }) {
       burns,
       status,
       winner,
-      burnedTokens: burns.reduce((sum, row) => sum + row.tokens, 0),
+      burnedTokens: burns.reduce((sum, row) => sum + (row.signature ? row.tokens : 0), 0),
       burn,
     }
   }, [auth.login, auth.loginError, auth.logout, auth.ready, burns, connected, lastWallet, pot, remaining, status, targetSol, wallet, winner])

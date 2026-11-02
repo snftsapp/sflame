@@ -14,27 +14,41 @@ export function shortWallet(address) {
   return `${address.slice(0, 4)}…${address.slice(-4)}`
 }
 
+export function canResetClock(now, deadline, status) {
+  if (status === "claimable" || status === "claimed") return false
+  return !deadline || now < deadline
+}
+
 export async function copyText(value) {
   try {
     await navigator.clipboard.writeText(value)
     return true
   } catch {
-    const area = document.createElement("textarea")
-    area.value = value
-    area.setAttribute("readonly", "")
-    area.style.position = "fixed"
-    area.style.left = "-9999px"
-    document.body.appendChild(area)
-    area.select()
-    const ok = document.execCommand("copy")
-    area.remove()
-    return ok
+    try {
+      const area = document.createElement("textarea")
+      area.value = value
+      area.setAttribute("readonly", "")
+      area.style.position = "fixed"
+      area.style.left = "-9999px"
+      document.body.appendChild(area)
+      area.select()
+      const ok = document.execCommand("copy")
+      area.remove()
+      return ok
+    } catch {
+      return false
+    }
   }
 }
 
 export function tokensFor(targetSol) {
   if (targetSol === START_TARGET) return START_TOKENS
   return Math.ceil(targetSol / PRICE_SOL)
+}
+
+export function formatPot(value) {
+  if (value == null || Number.isNaN(value)) return "—"
+  return `${formatSol(value)} SOL`
 }
 
 export function formatSol(value) {

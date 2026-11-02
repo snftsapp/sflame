@@ -1,6 +1,6 @@
 import { TOKEN_DECIMALS } from "./rules"
 
-const RPC = "https://api.mainnet-beta.solana.com"
+const RPC = "https://solana-rpc.publicnode.com"
 const TOKEN_PROGRAMS = new Set(["spl-token", "spl-token-2022"])
 
 export function solscanTx(signature) {
@@ -9,6 +9,24 @@ export function solscanTx(signature) {
 
 export function solscanAccount(address) {
   return `https://solscan.io/account/${address}`
+}
+
+export async function readSolBalance(address) {
+  const response = await fetch(RPC, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      jsonrpc: "2.0",
+      id: 1,
+      method: "getBalance",
+      params: [address, { commitment: "confirmed" }],
+    }),
+  })
+  if (!response.ok) return null
+  const body = await response.json()
+  const lamports = body.result?.value
+  if (typeof lamports !== "number") return null
+  return lamports / 1_000_000_000
 }
 
 function rawBalance(rows, mint, owner) {
@@ -61,10 +79,14 @@ export async function verifySflmBurn(signature, mint) {
   })
   if (!response.ok) return null
   const body = await response.json()
-  const burns = burnsFromTransaction(body.result, mint)
+  const tx = body.result
+  const blockTime = tx?.blockTime
+  const nowSec = Date.now() / 1000
+  if (typeof blockTime !== "number" || blockTime > nowSec + 30 || nowSec - blockTime > 600) return null
+  const burns = burnsFromTransaction(tx, mint)
   if (!burns.length) return null
   const wallet = burns[0].wallet
   if (burns.some((row) => row.wallet !== wallet)) return null
   const raw = burns.reduce((sum, row) => sum + row.raw, 0n)
-  return { wallet, raw, tokens: Number(raw) / 10 ** TOKEN_DECIMALS, signature }
+  return { wallet, raw, tokens: Number(raw) / 10 ** TOKEN_DECIMALS, signature, blockTime }
 }

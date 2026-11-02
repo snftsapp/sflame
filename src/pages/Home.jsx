@@ -262,7 +262,7 @@ function PotChart({ game }) {
   return (
     <div className="pot-chart">
       <p className="mono">SOL pot · preview</p>
-      <p className="chart-value">{formatSol(game.pot)}</p>
+      <p className="chart-value">{game.pot == null ? "—" : formatSol(game.pot)}</p>
       <p className="chart-sub">{game.burns.length} burns · next {formatTokens(game.tokens)} SFLM</p>
       <p className="mono pot-chart-caption">SFLM burned</p>
       <svg className="pot-chart-line" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="SFLM burned in this preview">
@@ -287,7 +287,7 @@ function Chart({ game }) {
   return (
     <>
       <p className="mono">SOL pot · preview</p>
-      <p className="chart-value">{formatSol(game.pot)}</p>
+      <p className="chart-value">{game.pot == null ? "—" : formatSol(game.pot)}</p>
       <p className="mono">Next burn</p>
       <p className="chart-sub">{formatTokens(game.tokens)} SFLM</p>
       <svg className="holdings-chart" viewBox="0 0 320 120" aria-hidden="true">

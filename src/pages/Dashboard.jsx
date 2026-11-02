@@ -1,5 +1,6 @@
 import { UiButton } from "../components/ui"
-import { POT_WALLET, formatClock, formatSol, formatTokens, shortWallet } from "../rules"
+import { solscanAccount } from "../burns"
+import { POT_WALLET, formatClock, formatPot, formatSol, formatTokens, shortWallet } from "../rules"
 import { useGame } from "../state"
 
 export default function Dashboard() {
@@ -7,13 +8,13 @@ export default function Dashboard() {
   const waiting = game.status === "soon"
   const lead = game.winner || (waiting ? "" : game.lastWallet)
   const rows = [
-    ["Pot", `${formatSol(game.pot)} SOL`],
-    ["Pot wallet", shortWallet(POT_WALLET)],
+    ["Pot", formatPot(game.pot)],
+    ["Pot wallet", shortWallet(POT_WALLET), solscanAccount(POT_WALLET)],
     ["Clock", waiting ? "Soon" : formatClock(game.remaining)],
     ["Status", waiting ? "Soon" : game.status],
     [game.winner ? "The winner" : "Last burn", lead ? shortWallet(lead) : "—"],
     ["Next burn", `${formatTokens(game.tokens)} SFLM`],
-    ["SOL target", `${formatSol(game.targetSol)} SOL`],
+    ["SOL target", `${formatSol(game.targetSol)} SOL`, null, "What this burn is worth"],
     ["Pool price", `${game.price} SOL`],
     ["Burned so far", waiting ? "—" : `${formatTokens(game.burnedTokens)} SFLM`],
   ]
@@ -23,12 +24,17 @@ export default function Dashboard() {
       <section className="page-hero layout-block-inner">
         <p className="mono eyebrow">Preview</p>
         <h1>The numbers.</h1>
-        <p className="body lede">Same round as Flame. Nothing here is on Solana yet.</p>
+        <p className="body lede">The pot is the wallet balance on Solana. The round still waits for the CA.</p>
         <div className="metrics">
-          {rows.map(([label, value]) => (
+          {rows.map(([label, value, href, note]) => (
             <article key={label} className="metric">
               <p className="mono">{label}</p>
-              <p className="h5">{value}</p>
+              {href ? (
+                <a className="h5 solscan-link" href={href} target="_blank" rel="noreferrer">{value}</a>
+              ) : (
+                <p className="h5">{value}</p>
+              )}
+              {note ? <p className="body-smaller">{note}</p> : null}
             </article>
           ))}
         </div>

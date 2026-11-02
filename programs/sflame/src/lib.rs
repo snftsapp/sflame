@@ -20,6 +20,7 @@ pub mod sflame {
         let game = &mut ctx.accounts.game;
         game.authority = ctx.accounts.authority.key();
         game.target_lamports = START_TARGET;
+        game.round = 1;
         game.bump = ctx.bumps.game;
         Ok(())
     }
@@ -77,7 +78,7 @@ pub mod sflame {
         let now = Clock::get()?.unix_timestamp;
         let game = &ctx.accounts.game;
         require!(game.mint != Pubkey::default(), GameError::MintUnset);
-        require!(game.deadline == 0 || now < game.deadline, GameError::RoundOver);
+        let next_deadline = restarted_deadline(now, game.deadline)?;
         require!(amount > 0, GameError::BurnTooSmall);
 
         let pot = pot_of(&game.to_account_info())?;
@@ -130,7 +131,7 @@ pub mod sflame {
         game.last_target_lamports = paid_target;
         game.burns = game.burns.checked_add(1).ok_or(GameError::Math)?;
         game.round_burns = game.round_burns.checked_add(1).ok_or(GameError::Math)?;
-        game.deadline = now.checked_add(ROUND_SECONDS).ok_or(GameError::Math)?;
+        game.deadline = next_deadline;
         game.target_lamports = next_target(paid_target)?;
         emit!(Burned {
             burner: game.last_burner,
@@ -307,9 +308,33 @@ pub enum GameError {
     Math,
 }
 
+fn restarted_deadline(now: i64, deadline: i64) -> Result<i64> {
+    if deadline != 0 && now >= deadline {
+        return Err(GameError::RoundOver.into());
+    }
+    now.checked_add(ROUND_SECONDS).ok_or_else(|| GameError::Math.into())
+}
+
 fn pot_of(game: &AccountInfo) -> Result<u64> {
     let rent = Rent::get()?.minimum_balance(game.data_len());
     Ok(game.lamports().saturating_sub(rent))
+}
+
+#[cfg(test)]
+mod deadline_tests {
+    use super::restarted_deadline;
+
+    #[test]
+    fn every_open_burn_restarts_at_three_minutes() {
+        assert_eq!(restarted_deadline(1_000, 0).unwrap(), 1_180);
+        assert_eq!(restarted_deadline(1_050, 1_100).unwrap(), 1_230);
+    }
+
+    #[test]
+    fn a_burn_after_the_clock_does_not_restart_it() {
+        assert!(restarted_deadline(1_100, 1_100).is_err());
+        assert!(restarted_deadline(1_101, 1_100).is_err());
+    }
 }
 
 fn move_lamports(from: &AccountInfo, to: &AccountInfo, amount: u64) -> Result<()> {

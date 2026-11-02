@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { UiButton } from "../components/ui"
 import { solscanAccount, solscanTx } from "../burns"
-import { POT_WALLET, copyText, formatClock, formatSol, formatTokens, shortWallet } from "../rules"
+import { POT_WALLET, copyText, formatClock, formatPot, formatSol, formatTokens, shortWallet } from "../rules"
 import { useGame } from "../state"
 
 export default function Flame() {
@@ -32,7 +32,7 @@ export default function Flame() {
               <span className={`live-dot ${game.status}`} />
               {waiting ? "Soon" : won ? "The winner" : "Live pot"}
             </p>
-            <p className="flame-pot">{formatSol(game.pot)} SOL</p>
+            <p className="flame-pot">{formatPot(game.pot)}</p>
             <button
               type="button"
               className="pot-wallet"
@@ -45,6 +45,7 @@ export default function Flame() {
             >
               {copied ? "Copied" : shortWallet(POT_WALLET)}
             </button>
+            <a className="solscan-link" href={solscanAccount(POT_WALLET)} target="_blank" rel="noreferrer">Solscan</a>
           </div>
           <p className="flame-clock">{waiting ? "Soon" : formatClock(game.remaining)}</p>
         </div>
@@ -80,7 +81,7 @@ export default function Flame() {
         <div className="flame-action">
           <p className="body-smaller">
             {won
-              ? `The winner is this wallet. Send ${formatSol(game.pot)} SOL from the pot wallet.`
+              ? `The winner is this wallet. Send ${formatPot(game.pot)} from the pot wallet.`
               : `First burn is ${formatTokens(game.tokens)} SFLM. The transaction burns them directly. The next one costs 5% more SOL.`}
           </p>
           <div className="flame-cta">
