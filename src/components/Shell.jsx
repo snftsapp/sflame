@@ -227,8 +227,8 @@ export function Shell({ children }) {
             ))}
           </div>
           <div className="menu-meta mono">
-            <span>Token SFLM · Solana · via StonkFun</span>
-            <a href="https://stonkfun.xyz" target="_blank" rel="noreferrer">StonkFun</a>
+            <span>Token SFLM · Solana · via Pump.fun</span>
+            <a href="https://pump.fun" target="_blank" rel="noreferrer">Pump.fun</a>
           </div>
         </div>
 
@@ -250,7 +250,7 @@ export function Shell({ children }) {
             <div className="footer-grid">
               <div className="footer-brand">
                 <p className="mono">Token</p>
-                <p className="h6">SFLM via StonkFun on Solana</p>
+                <p className="h6">SFLM via Pump.fun on Solana</p>
               </div>
               <div className="footer-col">
                 <h3>Navigation</h3>
@@ -265,7 +265,7 @@ export function Shell({ children }) {
               </div>
               <div className="footer-col">
                 <h3>Launch</h3>
-                <a href="https://stonkfun.xyz" target="_blank" rel="noreferrer">StonkFun</a>
+                <a href="https://pump.fun" target="_blank" rel="noreferrer">Pump.fun</a>
               </div>
               <div className="footer-col">
                 <h3>X</h3>
@@ -277,7 +277,7 @@ export function Shell({ children }) {
               </div>
             </div>
             <div className="footer-bottom body-smaller">
-              <span>SFLM · Solana · via StonkFun</span>
+              <span>SFLM · Solana · via Pump.fun</span>
             </div>
           </div>
           <div className="footer-wordmark-wrap" ref={wordWrapRef} aria-hidden="true">

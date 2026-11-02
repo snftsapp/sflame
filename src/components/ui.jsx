@@ -10,16 +10,16 @@ const FLAME_CORE =
 export function FlameMark({ className = "" }) {
   return (
     <svg className={className} viewBox="0 -4 64 98" aria-hidden="true">
-      <path fill="#78A8BE" d={FLAME_BODY} />
+      <path fill="#86efac" d={FLAME_BODY} />
       <path className="flame-inner" fill="#fff" fillOpacity="0.84" d={FLAME_TONGUE} />
       <path className="flame-core" fill="#fff" d={FLAME_CORE} />
-      <circle className="flame-ember" cx="34.7" cy="1" r="2.1" fill="#78A8BE" />
-      <circle className="flame-ember" cx="44.2" cy="8.2" r="2.5" fill="#78A8BE" />
-      <circle className="flame-ember" cx="18.1" cy="13.8" r="2.3" fill="#78A8BE" />
-      <circle className="flame-ember" cx="56.1" cy="27.1" r="1.8" fill="#78A8BE" />
-      <circle cx="16" cy="86" r="0.7" fill="#78A8BE" opacity="0.45" />
-      <circle cx="50" cy="90" r="0.55" fill="#78A8BE" opacity="0.35" />
-      <circle cx="8" cy="78" r="0.45" fill="#9ec4d2" opacity="0.4" />
+      <circle className="flame-ember" cx="34.7" cy="1" r="2.1" fill="#86efac" />
+      <circle className="flame-ember" cx="44.2" cy="8.2" r="2.5" fill="#86efac" />
+      <circle className="flame-ember" cx="18.1" cy="13.8" r="2.3" fill="#86efac" />
+      <circle className="flame-ember" cx="56.1" cy="27.1" r="1.8" fill="#86efac" />
+      <circle cx="16" cy="86" r="0.7" fill="#86efac" opacity="0.45" />
+      <circle cx="50" cy="90" r="0.55" fill="#86efac" opacity="0.35" />
+      <circle cx="8" cy="78" r="0.45" fill="#c6f7d6" opacity="0.4" />
     </svg>
   )
 }

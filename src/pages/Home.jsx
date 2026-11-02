@@ -14,9 +14,9 @@ const steps = [
 ]
 
 const stack = [
-  ["token", "Token", "Launch on StonkFun", "SFLM launches on StonkFun. The trading pool stays put. Nobody wins that liquidity."],
+  ["token", "Token", "Launch on Pump.fun", "SFLM launches on Pump.fun. The trading pool stays put. Nobody wins that liquidity."],
   ["burn", "Burn", "Quote follows the pool", "Cheap token, more coins. Expensive token, fewer coins. Same SOL pain, then 5% harder."],
-  ["pot", "Pot", "SOL sits on its own", "The pot is separate. The winner is the last burner. The pot wallet sends the SOL. It is not the Raydium pool."],
+  ["pot", "Pot", "SOL sits on its own", "The pot is separate. The winner is the last burner. The pot wallet sends the SOL. It is not the Pump.fun pool."],
   ["clock", "Clock", "Three minutes, full reset", "The first burn starts the clock. Every later burn sets it back to 3:00."],
   ["claim", "Winner", "Last burn takes it", "When the clock hits zero, that wallet is the winner. The pot wallet sends the SOL."],
 ]
@@ -24,14 +24,14 @@ const stack = [
 const lines = [
   "Solana puts the burn onchain,",
   "in front of a live pool.",
-  "We launch SFLM on StonkFun,",
+  "We launch SFLM on Pump.fun,",
   "you sign from your wallet,",
   "and the last burn takes the pot.",
 ]
 
 const faqs = [
-  ["Where does sFlame launch?", "On Solana, through StonkFun. You sign from your wallet. StonkFun is the launch rail. sFlame is the burn game on top."],
-  ["What do you win?", "A separate SOL pot. Not the Raydium pool, and not other people’s liquidity. The last wallet to burn before the clock hits zero is the winner, and the pot wallet sends the SOL there."],
+  ["Where does sFlame launch?", "On Solana, through Pump.fun. You sign from your wallet. Pump.fun is the launch rail. sFlame is the burn game on top."],
+  ["What do you win?", "A separate SOL pot. Not the Pump.fun pool, and not other people’s liquidity. The last wallet to burn before the clock hits zero is the winner, and the pot wallet sends the SOL there."],
   ["How does the clock work?", "The first burn starts a 3 minute clock. Every later burn resets it to 3 minutes. If nobody burns before it ends, that wallet is the winner."],
   ["How many tokens do you burn?", "Enough to equal a SOL target at the pool price. A cheap token means more tokens. An expensive token means fewer. The SOL target rises 5% after every burn."],
   ["Is this live?", "This site is the interface. The timer you can press here runs in the browser so the flow is visible. It does not move SOL yet."],
@@ -81,7 +81,7 @@ export default function Home() {
             </div>
             <div className="hero-bottom">
               <div>
-                <p className="mono">Launching via StonkFun on Solana as</p>
+                <p className="mono">Launching via Pump.fun on Solana as</p>
                 <p className="h6">SFLM</p>
               </div>
               <p className="body-smaller hero-mid">
@@ -269,10 +269,10 @@ function PotChart({ game }) {
         {[0.25, 0.5, 0.75].map((mark) => (
           <line key={mark} x1="0" x2={width} y1={height * mark} y2={height * mark} stroke="#f3f8f814" />
         ))}
-        <path d={area} fill="#69aac133" />
-        <path d={line} fill="none" stroke="#b7eef8" strokeWidth="2.4" />
+        <path d={area} fill="#86efac33" />
+        <path d={line} fill="none" stroke="#c6f7d6" strokeWidth="2.4" />
         {coords.map((point, index) => (
-          <circle key={`${point.x}-${index}`} cx={point.x} cy={point.y} r={point.next ? 4.5 : 3} fill={point.next ? "#b7eef8" : "#69aac1"} />
+          <circle key={`${point.x}-${index}`} cx={point.x} cy={point.y} r={point.next ? 4.5 : 3} fill={point.next ? "#c6f7d6" : "#86efac"} />
         ))}
       </svg>
       <div className="pot-chart-key mono">

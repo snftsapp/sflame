@@ -98,7 +98,7 @@ export function AuthProvider({ children }) {
         loginMethods: ["wallet", "email"],
         appearance: {
           theme: "#071013",
-          accentColor: "#69aac1",
+          accentColor: "#86efac",
           walletChainType: "solana-only",
           walletList: ["phantom", "solflare", "backpack", "detected_solana_wallets"],
           showWalletLoginFirst: true,

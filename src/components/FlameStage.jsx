@@ -10,7 +10,7 @@ function clay(color, emissive, intensity) {
     clearcoat: 0.72,
     clearcoatRoughness: 0.18,
     sheen: 0.18,
-    sheenColor: new THREE.Color(0xd7f4ff),
+    sheenColor: new THREE.Color(0xd7ffe4),
     emissive: new THREE.Color(emissive),
     emissiveIntensity: intensity,
   })
@@ -270,23 +270,23 @@ export function FlameStage() {
       return material
     }
 
-    const body = new THREE.Mesh(keep(inflate(bodyShape(), 0.3, 110, 150)), paint(clay(0x127aa4, 0x063848, 0.05)))
+    const body = new THREE.Mesh(keep(inflate(bodyShape(), 0.3, 110, 150)), paint(clay(0x1fad5a, 0x063818, 0.05)))
     root.add(body)
 
-    const lick = new THREE.Mesh(keep(inflate(lickShape(), 0.12, 64, 72)), paint(clay(0x3eb4d4, 0x0c5878, 0.08)))
+    const lick = new THREE.Mesh(keep(inflate(lickShape(), 0.12, 64, 72)), paint(clay(0x4ade80, 0x0c5830, 0.08)))
     lick.position.z = 0.3
     root.add(lick)
 
-    const tongue = new THREE.Mesh(keep(inflate(tongueShape(), 0.16, 80, 100)), paint(clay(0xb7eef8, 0x3eb4d6, 0.2)))
+    const tongue = new THREE.Mesh(keep(inflate(tongueShape(), 0.16, 80, 100)), paint(clay(0xdfffe8, 0x86efac, 0.2)))
     tongue.position.z = 0.34
     root.add(tongue)
 
-    const core = new THREE.Mesh(keep(inflate(coreShape(), 0.08, 48, 60)), paint(clay(0xeefbff, 0x7ad4ea, 0.28)))
+    const core = new THREE.Mesh(keep(inflate(coreShape(), 0.08, 48, 60)), paint(clay(0xf4fff6, 0xb6f5c8, 0.28)))
     core.position.z = 0.48
     root.add(core)
 
     const emberGeometry = keep(inflate(emberShape(), 0.04, 36, 44))
-    const emberMaterial = paint(clay(0x8ed4ee, 0x2a8eb0, 0.08))
+    const emberMaterial = paint(clay(0x86efac, 0x1a7a40, 0.08))
     const embers = [
       [0.5, 1.4, 0.42, -0.55, 0.9],
       [0.12, 1.68, 0.36, 0.15, 0.4],
@@ -322,11 +322,11 @@ export function FlameStage() {
     shadow.renderOrder = -1
     scene.add(shadow)
 
-    scene.add(new THREE.HemisphereLight(0xf7fcff, 0x123040, 0.72))
+    scene.add(new THREE.HemisphereLight(0xf7fff8, 0x123020, 0.72))
     const key = new THREE.DirectionalLight(0xffffff, 1.7)
     key.position.set(-3.2, 4.4, 3.4)
     scene.add(key)
-    const fill = new THREE.DirectionalLight(0xd7f4ff, 0.45)
+    const fill = new THREE.DirectionalLight(0xd7ffe4, 0.45)
     fill.position.set(2.4, 1.2, 2.8)
     scene.add(fill)
 
