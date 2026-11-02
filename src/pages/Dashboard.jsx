@@ -33,7 +33,7 @@ export default function Dashboard() {
           ))}
         </div>
         <div className="actions">
-          <UiButton to="/flame" variant="accent" icon>Enter Flame</UiButton>
+          <UiButton to="/flame" variant="accent" icon className="keep-case">Enter SFLAME</UiButton>
         </div>
       </section>
     </main>

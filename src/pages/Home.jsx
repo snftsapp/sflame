@@ -76,7 +76,7 @@ export default function Home() {
               </h1>
               <div className="hero-actions">
                 <UiButton to="/dashboard" variant="accent" icon onDark>Explore the Dashboard</UiButton>
-                <UiButton to="/flame" variant="secondary" onDark>Enter Flame</UiButton>
+                <UiButton to="/flame" variant="secondary" onDark className="keep-case">Enter SFLAME</UiButton>
               </div>
             </div>
             <div className="hero-bottom">
@@ -176,7 +176,7 @@ export default function Home() {
             </h2>
             <div className="hero-actions" style={{ marginTop: 28 }}>
               <UiButton to="/dashboard" variant="accent" onDark icon>Explore the Dashboard</UiButton>
-              <UiButton to="/flame" variant="secondary" onDark>Enter Flame</UiButton>
+              <UiButton to="/flame" variant="secondary" onDark className="keep-case">Enter SFLAME</UiButton>
             </div>
           </div>
           <div className="cta-visual">
@@ -204,7 +204,7 @@ export default function Home() {
                 )
               })}
             </div>
-            <UiButton to="/flame" variant="secondary" icon>Enter Flame</UiButton>
+            <UiButton to="/flame" variant="secondary" icon className="keep-case">Enter SFLAME</UiButton>
           </div>
         </div>
       </section>

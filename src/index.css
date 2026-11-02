@@ -135,7 +135,7 @@ h5, .h5 { letter-spacing: -0.22px; font-size: 22px; font-weight: 500; line-heigh
   pointer-events: none;
 }
 .logo { color: inherit; z-index: 2; display: flex; }
-.brand-lockup { display: flex; align-items: center; gap: 10px; font-weight: 500; letter-spacing: 0.08em; font-size: 15px; text-transform: uppercase; }
+.brand-lockup { display: flex; align-items: center; gap: 10px; font-weight: 500; letter-spacing: 0.08em; font-size: 15px; text-transform: none; }
 .brand-lockup svg { width: auto; height: 100%; }
 .ui-button {
   cursor: pointer;
@@ -153,6 +153,7 @@ h5, .h5 { letter-spacing: -0.22px; font-size: 22px; font-weight: 500; line-heigh
   position: relative;
   overflow: hidden;
 }
+.ui-button.keep-case { text-transform: none; }
 .ui-button .content, .ui-button .icon { flex-direction: column; height: 34px; display: flex; overflow: hidden; }
 .ui-button .content { flex-grow: 1; }
 .ui-button .content > span, .ui-button .icon > span {

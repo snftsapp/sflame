@@ -260,7 +260,7 @@ export function Shell({ children }) {
               </div>
               <div className="footer-col">
                 <h3>Play</h3>
-                <NavLink to="/flame" viewTransition>Enter Flame</NavLink>
+                <NavLink to="/flame" viewTransition>Enter SFLAME</NavLink>
                 <NavLink to="/dashboard" viewTransition>Dashboard</NavLink>
               </div>
               <div className="footer-col">
