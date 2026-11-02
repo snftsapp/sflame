@@ -1,0 +1,19 @@
+[toolchain]
+anchor_version = "0.32.1"
+
+[features]
+resolution = true
+skip-lint = false
+
+[programs.localnet]
+sflame = "7C148tGcgFECnaEivuWGZ3pyDAzmevgFRLoVzmiQ2Cc3"
+
+[programs.devnet]
+sflame = "7C148tGcgFECnaEivuWGZ3pyDAzmevgFRLoVzmiQ2Cc3"
+
+[provider]
+cluster = "localnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "cargo test --manifest-path programs/sflame/Cargo.toml --lib quote::tests -- --test-threads=8"
