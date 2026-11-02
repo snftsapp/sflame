@@ -5,11 +5,6 @@ import { MINT, POT_WALLET, PRICE_SOL, ROUND_MS, START_TARGET, TOKEN_DECIMALS, ca
 
 const GameContext = createContext(null)
 
-const seedBurns = [
-  { wallet: "4mQp9sT2aL8kR1nC6dF0eH3", tokens: 5655, sol: 0.475, at: "02:11" },
-  { wallet: "9cVb2wE7yU1iO5pA3sD8fG4", tokens: 5952, sol: 0.5, at: "03:00" },
-]
-
 export function GameProvider({ children }) {
   const auth = useWalletAuth()
   const [now, setNow] = useState(() => Date.now())
@@ -18,7 +13,7 @@ export function GameProvider({ children }) {
   const [deadline, setDeadline] = useState(0)
   const [lastWallet, setLastWallet] = useState(null)
   const [lastBurnAt, setLastBurnAt] = useState(0)
-  const [burns, setBurns] = useState(seedBurns)
+  const [burns, setBurns] = useState([])
   const [status, setStatus] = useState("soon")
   const [winner, setWinner] = useState(null)
   const gate = useRef({ status, deadline, lastBurnAt })

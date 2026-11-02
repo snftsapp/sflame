@@ -75,7 +75,7 @@ export default function Flame() {
           <article className="flame-card is-accent">
             <p className="mono">Burn now</p>
             <p className="h4">{formatTokens(game.tokens)} SFLM</p>
-            <p className="body-smaller">{formatSol(game.targetSol)} SOL at pool price</p>
+            <p className="body-smaller">{formatSol(game.targetSol)} SOL opening quote</p>
           </article>
         </div>
         <div className="flame-action">

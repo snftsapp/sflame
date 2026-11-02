@@ -15,7 +15,7 @@ export default function Dashboard() {
     [game.winner ? "The winner" : "Last burn", lead ? shortWallet(lead) : "—"],
     ["Next burn", `${formatTokens(game.tokens)} SFLM`],
     ["SOL target", `${formatSol(game.targetSol)} SOL`, null, "What this burn is worth"],
-    ["Pool price", `${game.price} SOL`],
+    ["Opening price", `${game.price} SOL`],
     ["Burned so far", waiting ? "—" : `${formatTokens(game.burnedTokens)} SFLM`],
   ]
 

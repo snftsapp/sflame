@@ -261,18 +261,18 @@ function PotChart({ game }) {
 
   return (
     <div className="pot-chart">
-      <p className="mono">SOL pot · preview</p>
+      <p className="mono">SOL pot</p>
       <p className="chart-value">{game.pot == null ? "—" : formatSol(game.pot)}</p>
-      <p className="chart-sub">{game.burns.length} burns · next {formatTokens(game.tokens)} SFLM</p>
+      <p className="chart-sub">{game.burns.length ? `${game.burns.length} burns` : "No burns yet"} · next {formatTokens(game.tokens)} SFLM</p>
       <p className="mono pot-chart-caption">SFLM burned</p>
-      <svg className="pot-chart-line" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="SFLM burned in this preview">
+      <svg className="pot-chart-line" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="SFLM burned">
         {[0.25, 0.5, 0.75].map((mark) => (
           <line key={mark} x1="0" x2={width} y1={height * mark} y2={height * mark} stroke="#f3f8f814" />
         ))}
         <path d={area} fill="#69aac133" />
         <path d={line} fill="none" stroke="#b7eef8" strokeWidth="2.4" />
-        {coords.map((point) => (
-          <circle key={point.x} cx={point.x} cy={point.y} r={point.next ? 4.5 : 3} fill={point.next ? "#b7eef8" : "#69aac1"} />
+        {coords.map((point, index) => (
+          <circle key={`${point.x}-${index}`} cx={point.x} cy={point.y} r={point.next ? 4.5 : 3} fill={point.next ? "#b7eef8" : "#69aac1"} />
         ))}
       </svg>
       <div className="pot-chart-key mono">
@@ -286,7 +286,7 @@ function PotChart({ game }) {
 function Chart({ game }) {
   return (
     <>
-      <p className="mono">SOL pot · preview</p>
+      <p className="mono">SOL pot</p>
       <p className="chart-value">{game.pot == null ? "—" : formatSol(game.pot)}</p>
       <p className="mono">Next burn</p>
       <p className="chart-sub">{formatTokens(game.tokens)} SFLM</p>
