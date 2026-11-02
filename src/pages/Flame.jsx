@@ -10,11 +10,13 @@ export default function Flame() {
   const [copiedWinner, setCopiedWinner] = useState(false)
   const won = Boolean(game.winner)
   const waiting = game.status === "soon"
+  const open = game.status === "open"
   const verified = game.burns.filter((row) => row.signature)
   let action = "Connect to burn"
   if (won) action = "Round over"
   else if (waiting && game.connected) action = "Soon"
   else if (game.connected && game.status === "live") action = "Burn to take the lead"
+  else if (open && game.connected) action = "First burn starts the clock"
 
   function onAction() {
     if (won || waiting) return
@@ -30,7 +32,7 @@ export default function Flame() {
             <h1>sFlame</h1>
             <p className="live-pot-label">
               <span className={`live-dot ${game.status}`} />
-              {waiting ? "Soon" : won ? "The winner" : "Live pot"}
+              {waiting ? "Soon" : won ? "The winner" : open ? "Open" : "Live pot"}
             </p>
             <p className="flame-pot">{formatPot(game.pot)}</p>
             <button
@@ -47,7 +49,7 @@ export default function Flame() {
             </button>
             <a className="solscan-link" href={solscanAccount(POT_WALLET)} target="_blank" rel="noreferrer">Solscan</a>
           </div>
-          <p className="flame-clock">{waiting ? "Soon" : formatClock(game.remaining)}</p>
+          <p className="flame-clock">{waiting ? "Soon" : open ? "03:00" : formatClock(game.remaining)}</p>
         </div>
         <p className="body lede">Last burn wins the pot. Every burn sets the clock back to 3:00.</p>
         <div className="flame-grid">
@@ -85,14 +87,14 @@ export default function Flame() {
               : `First burn is ${formatTokens(game.tokens)} SFLM. The transaction burns them directly. The next one costs 5% more SOL.`}
           </p>
           <div className="flame-cta">
-            <UiButton variant="accent" onClick={onAction} disabled={won || (waiting && game.connected)}>{action}</UiButton>
+            <UiButton variant="accent" onClick={onAction} disabled={won || (waiting && game.connected) || (open && game.connected)}>{action}</UiButton>
           </div>
         </div>
       </section>
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="layout-block-inner">
           <h2>Burns</h2>
-          {waiting || verified.length === 0 ? <p className="body" style={{ marginTop: 28 }}>Round 1 starts when the CA is live.</p> : <div className="table-wrap" style={{ marginTop: 28 }}>
+          {waiting ? <p className="body" style={{ marginTop: 28 }}>Round 1 starts when the CA is live.</p> : verified.length === 0 ? <p className="body" style={{ marginTop: 28 }}>No burns yet. The first burn starts the 3:00 clock.</p> : <div className="table-wrap" style={{ marginTop: 28 }}>
             <table className="flame-table">
               <thead>
                 <tr>

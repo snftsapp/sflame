@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { NavLink, useLocation } from "react-router-dom"
 import { useLenis } from "lenis/react"
-import { shortWallet } from "../rules"
+import { MINT, shortWallet } from "../rules"
 import { useGame } from "../state"
 import { StackField } from "./StackField"
 import { FlameMark, Logo, UiButton, blurLayer } from "./ui"
@@ -14,8 +14,9 @@ const links = [
 ]
 
 const desktopLinks = links.filter((link) => link.to !== "/")
-const CONTRACT = "Soon"
+const CONTRACT = MINT
 const X_URL = "https://x.com/sFlameapp"
+const PUMP_URL = `https://pump.fun/coin/${MINT}`
 
 function CopyContract() {
   const [copied, setCopied] = useState(false)
@@ -228,7 +229,7 @@ export function Shell({ children }) {
           </div>
           <div className="menu-meta mono">
             <span>Token SFLM · Solana · via Pump.fun</span>
-            <a href="https://pump.fun" target="_blank" rel="noreferrer">Pump.fun</a>
+            <a href={PUMP_URL} target="_blank" rel="noreferrer">Pump.fun</a>
           </div>
         </div>
 
@@ -265,7 +266,7 @@ export function Shell({ children }) {
               </div>
               <div className="footer-col">
                 <h3>Launch</h3>
-                <a href="https://pump.fun" target="_blank" rel="noreferrer">Pump.fun</a>
+                <a href={PUMP_URL} target="_blank" rel="noreferrer">Pump.fun</a>
               </div>
               <div className="footer-col">
                 <h3>X</h3>

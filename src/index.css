@@ -473,7 +473,7 @@ h5, .h5 { letter-spacing: -0.22px; font-size: 22px; font-weight: 500; line-heigh
 .footer-col h3 { font-family: var(--font-narrow); letter-spacing: 1.04px; text-transform: uppercase; margin-bottom: 16px; font-size: 13px; font-weight: 500; }
 .footer-col a { color: var(--off-white); padding: 6px 0; font-size: 16px; font-weight: 500; display: block; }
 .footer-col a:hover { color: var(--brand-bright); }
-.footer-col .footer-copy { color: var(--off-white); text-align: left; padding: 6px 0; font-size: 16px; font-weight: 500; display: block; }
+.footer-col .footer-copy { color: var(--off-white); text-align: left; padding: 6px 0; font-size: 16px; font-weight: 500; display: block; overflow-wrap: anywhere; }
 .footer-col .footer-copy:hover { color: var(--brand-bright); }
 .footer-bottom { color: var(--off-white); flex-wrap: wrap; justify-content: space-between; gap: 16px; margin-top: 64px; padding-top: 24px; display: flex; }
 .footer-wordmark-wrap {

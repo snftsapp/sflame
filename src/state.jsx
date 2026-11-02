@@ -14,7 +14,7 @@ export function GameProvider({ children }) {
   const [lastWallet, setLastWallet] = useState(null)
   const [lastBurnAt, setLastBurnAt] = useState(0)
   const [burns, setBurns] = useState([])
-  const [status, setStatus] = useState("soon")
+  const [status, setStatus] = useState(MINT ? "open" : "soon")
   const [winner, setWinner] = useState(null)
   const gate = useRef({ status, deadline, lastBurnAt })
   gate.current = { status, deadline, lastBurnAt }
